@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<panel>
+    <label>Test label</label>
+    <text-field>Test text-field</text-field>
+    <button>Test button</button>
+    <button>Test button</button>
+    <button>Test button</button>
+ </panel>
