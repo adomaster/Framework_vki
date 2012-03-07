@@ -62,7 +62,7 @@
       <file leaf-file-name="xmlparse.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/xmlparse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="57" selection-start="691" selection-end="691" vertical-scroll-proportion="0.575">
+            <state line="13" column="62" selection-start="368" selection-end="368" vertical-scroll-proportion="0.425">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -376,7 +376,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/xmlparse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="57" selection-start="691" selection-end="691" vertical-scroll-proportion="0.575">
+        <state line="13" column="62" selection-start="368" selection-end="368" vertical-scroll-proportion="0.425">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
