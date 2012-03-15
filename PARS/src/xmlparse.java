@@ -4,6 +4,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 
 import java.awt.BorderLayout;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -62,7 +63,7 @@ public class xmlparse extends DefaultHandler {
         curItem.frame = frame;
         curItem.name = "frame";
         panel = new JPanel();
-       // panel.setLayout(new BorderLayout());
+        // panel.setLayout(new BorderLayout());
     }
 
 
@@ -96,46 +97,43 @@ public class xmlparse extends DefaultHandler {
             if (curItem.attrib != null) {
                 int len = curItem.attrib.getLength();
                 for (int i = 0; i < len; i++) {
-                    if(curItem.attrib.getQName(i).equals("bgcolor"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("bgcolor")) {
                         curItem.label.setOpaque(true);
-                       if(curItem.attrib.getValue(i).equals("black"))
-                           curItem.label.setBackground(Color.black);
-                        if(curItem.attrib.getValue(i).equals("white"))
-                           curItem.label.setBackground(Color.white);
-                        if(curItem.attrib.getValue(i).equals("red"))
-                           curItem.label.setBackground(Color.red);
-                        if(curItem.attrib.getValue(i).equals("green"))
-                           curItem.label.setBackground(Color.green);
-                        if(curItem.attrib.getValue(i).equals("blue"))
-                           curItem.label.setBackground(Color.blue);
-                        if(curItem.attrib.getValue(i).equals("yellow"))
-                           curItem.label.setBackground(Color.yellow);
-                        if(curItem.attrib.getValue(i).equals("gray"))
-                           curItem.label.setBackground(Color.gray);
-                       // curItem.label.setBackground(curItem.attrib.getValue(i));//!!! Color != String
+                        if (curItem.attrib.getValue(i).equals("black"))
+                            curItem.label.setBackground(Color.black);
+                        if (curItem.attrib.getValue(i).equals("white"))
+                            curItem.label.setBackground(Color.white);
+                        if (curItem.attrib.getValue(i).equals("red"))
+                            curItem.label.setBackground(Color.red);
+                        if (curItem.attrib.getValue(i).equals("green"))
+                            curItem.label.setBackground(Color.green);
+                        if (curItem.attrib.getValue(i).equals("blue"))
+                            curItem.label.setBackground(Color.blue);
+                        if (curItem.attrib.getValue(i).equals("yellow"))
+                            curItem.label.setBackground(Color.yellow);
+                        if (curItem.attrib.getValue(i).equals("gray"))
+                            curItem.label.setBackground(Color.gray);
+                        // curItem.label.setBackground(curItem.attrib.getValue(i));//!!! Color != String
                     }
-                    if(curItem.attrib.getQName(i).equals("width"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("width")) {
                         width = Integer.parseInt(curItem.attrib.getValue(i));
                     }
-                    if(curItem.attrib.getQName(i).equals("height"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("height")) {
                         height = Integer.parseInt(curItem.attrib.getValue(i));
                     }
-                    Dimension d =new Dimension(width,height);
+                    Dimension d = new Dimension(width, height);
                     curItem.label.setPreferredSize(d);
 
-                   /* if(curItem.attrib.getQName(i).equals("valign"))
-                    {
+                    /* if(curItem.attrib.getQName(i).equals("valign"))
+                   {
 
-                       switch (curItem.attrib.getValue(i).charAt(0))  {
-                           case 't': curItem.label.setVerticalAlignment(JLabel.TOP);
-                           case 'c': curItem.label.setVerticalAlignment(JLabel.CENTER);
-                           case 'b': curItem.label.setVerticalAlignment(JLabel.BOTTOM);
-                       }
+                      switch (curItem.attrib.getValue(i).charAt(0))  {
+                          case 't': curItem.label.setVerticalAlignment(JLabel.TOP);
+                          case 'c': curItem.label.setVerticalAlignment(JLabel.CENTER);
+                          case 'b': curItem.label.setVerticalAlignment(JLabel.BOTTOM);
+                      }
 
-                    } */
+                   } */
                 }
             }
         }
@@ -150,37 +148,34 @@ public class xmlparse extends DefaultHandler {
             if (curItem.attrib != null) {
                 int len = curItem.attrib.getLength();
                 for (int i = 0; i < len; i++) {
-                    if(curItem.attrib.getQName(i).equals("bgcolor"))
-                    {
-                            if(curItem.attrib.getValue(i).equals("black"))
-                           curItem.textField.setBackground(Color.black);
-                        if(curItem.attrib.getValue(i).equals("white"))
-                           curItem.textField.setBackground(Color.white);
-                        if(curItem.attrib.getValue(i).equals("red"))
-                           curItem.textField.setBackground(Color.red);
-                        if(curItem.attrib.getValue(i).equals("green"))
-                           curItem.textField.setBackground(Color.green);
-                        if(curItem.attrib.getValue(i).equals("blue"))
-                           curItem.textField.setBackground(Color.blue);
-                        if(curItem.attrib.getValue(i).equals("yellow"))
-                           curItem.textField.setBackground(Color.yellow);
-                        if(curItem.attrib.getValue(i).equals("gray"))
-                           curItem.textField.setBackground(Color.gray);
-                       // curItem.textField.setBackground(curItem.attrib.getValue(i));//!!! Color != String
+                    if (curItem.attrib.getQName(i).equals("bgcolor")) {
+                        if (curItem.attrib.getValue(i).equals("black"))
+                            curItem.textField.setBackground(Color.black);
+                        if (curItem.attrib.getValue(i).equals("white"))
+                            curItem.textField.setBackground(Color.white);
+                        if (curItem.attrib.getValue(i).equals("red"))
+                            curItem.textField.setBackground(Color.red);
+                        if (curItem.attrib.getValue(i).equals("green"))
+                            curItem.textField.setBackground(Color.green);
+                        if (curItem.attrib.getValue(i).equals("blue"))
+                            curItem.textField.setBackground(Color.blue);
+                        if (curItem.attrib.getValue(i).equals("yellow"))
+                            curItem.textField.setBackground(Color.yellow);
+                        if (curItem.attrib.getValue(i).equals("gray"))
+                            curItem.textField.setBackground(Color.gray);
+                        // curItem.textField.setBackground(curItem.attrib.getValue(i));//!!! Color != String
                     }
-                    if(curItem.attrib.getQName(i).equals("width"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("width")) {
                         width = Integer.parseInt(curItem.attrib.getValue(i));
                     }
-                    if(curItem.attrib.getQName(i).equals("height")){
+                    if (curItem.attrib.getQName(i).equals("height")) {
                         height = Integer.parseInt(curItem.attrib.getValue(i));
                     }
                     frame.setContentPane(panel);
-                    Dimension d =new Dimension(width,height);
+                    Dimension d = new Dimension(width, height);
                     curItem.textField.setPreferredSize(d);
-                    if(curItem.attrib.getQName(i).equals("align"))
-                    {
-                      //    switch ()
+                    if (curItem.attrib.getQName(i).equals("align")) {
+                        //    switch ()
                     }
                 }
             }
@@ -194,43 +189,40 @@ public class xmlparse extends DefaultHandler {
                     }
                 });
             }});
-          //  System.out.print("bug");
-          //  curItem.button.setBackground(Color.red);
-          //  System.out.print("bug");
-           // curItem.parent.panel.add(curItem.button);
+            //  System.out.print("bug");
+            //  curItem.button.setBackground(Color.red);
+            //  System.out.print("bug");
+            // curItem.parent.panel.add(curItem.button);
 
             int width = 60;
             int height = 20;
             if (curItem.attrib != null) {
                 int len = curItem.attrib.getLength();
                 for (int i = 0; i < len; i++) {
-                    if(curItem.attrib.getQName(i).equals("bgcolor"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("bgcolor")) {
 
-                       if(curItem.attrib.getValue(i).equals("black"))
-                           curItem.button.setBackground(Color.black);
-                        if(curItem.attrib.getValue(i).equals("white"))
-                           curItem.button.setBackground(Color.white);
-                        if(curItem.attrib.getValue(i).equals("red"))
-                           curItem.button.setBackground(Color.red);
-                        if(curItem.attrib.getValue(i).equals("green"))
-                           curItem.button.setBackground(Color.green);
-                        if(curItem.attrib.getValue(i).equals("blue"))
-                           curItem.button.setBackground(Color.blue);
-                        if(curItem.attrib.getValue(i).equals("yellow"))
-                           curItem.button.setBackground(Color.yellow);
-                        if(curItem.attrib.getValue(i).equals("gray"))
-                           curItem.button.setBackground(Color.gray);
+                        if (curItem.attrib.getValue(i).equals("black"))
+                            curItem.button.setBackground(Color.black);
+                        if (curItem.attrib.getValue(i).equals("white"))
+                            curItem.button.setBackground(Color.white);
+                        if (curItem.attrib.getValue(i).equals("red"))
+                            curItem.button.setBackground(Color.red);
+                        if (curItem.attrib.getValue(i).equals("green"))
+                            curItem.button.setBackground(Color.green);
+                        if (curItem.attrib.getValue(i).equals("blue"))
+                            curItem.button.setBackground(Color.blue);
+                        if (curItem.attrib.getValue(i).equals("yellow"))
+                            curItem.button.setBackground(Color.yellow);
+                        if (curItem.attrib.getValue(i).equals("gray"))
+                            curItem.button.setBackground(Color.gray);
                     }
-                    if(curItem.attrib.getQName(i).equals("width"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("width")) {
                         width = Integer.parseInt(curItem.attrib.getValue(i));
                     }
-                    if(curItem.attrib.getQName(i).equals("height"))
-                    {
+                    if (curItem.attrib.getQName(i).equals("height")) {
                         height = Integer.parseInt(curItem.attrib.getValue(i));
                     }
-                    Dimension d =new Dimension(width,height);
+                    Dimension d = new Dimension(width, height);
                     curItem.button.setPreferredSize(d);
                     /*if(curItem.attrib.getQName(i).equals("align"))
                     {
