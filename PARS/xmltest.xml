@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<panel>
-    <label width="200" height="200" bgcolor="yellow">Test label</label>
-    <text-field width="100" height="50" bgcolor="red">Test text-field</text-field>
-    <button width="200" height="200" bgcolor="green">Test button</button>
-
- </panel>
