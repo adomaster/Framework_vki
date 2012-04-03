@@ -1,24 +1,19 @@
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.DefaultHandler;
-import javax.swing.*;
+import XmlParser;
 import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;
+import java.util.ArrayList.*;
 
-/*public class XmlLayoutTest extends xmlparse
+
+
+class XmlLayoutTest extends JFrame
+
 {
 
-    private xmlparse s1;
-    public xmlTree root;
     public XmlLayoutTest()
 
     {
-        s1 = new xmlparse();
-        s1.parseXml("xmltest.xml");
-        root = s1.root;
+
+        getContentPane().setLayout(new XmlLayout());
 
     }
 
@@ -30,15 +25,20 @@ import java.awt.event.*;
 
         XmlLayoutTest flt = new XmlLayoutTest();
 
+        flt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        flt.setVisible(true);
 
     }
 
 }
- */
-class XmlLayout implements LayoutManager
+
+
+
+
+public class XmlLayout implements LayoutManager
 
 {
-
 
 
     public void addLayoutComponent(String name, Component comp)
@@ -81,11 +81,11 @@ class XmlLayout implements LayoutManager
 
         Component[] components = parent.getComponents();
 
-        for(int i=0; i<components.length; i++) {
+        for(int k=0; k<components.length; k++) {
 
-            prefWidth += components[i].getWidth();
+            prefWidth += components[k].getWidth();
 
-            prefHeight += components[i].getHeight();
+            prefHeight += components[k].getHeight();
 
         }
 
@@ -95,26 +95,28 @@ class XmlLayout implements LayoutManager
 
  
 
-    public void layoutContainer(Container parent)
+
+
+    public void layoutContainer(XmlTree parent)
 
     {
 
-        Component[] components = parent.getComponents();
-        int row = 0;
-        int col = 0;
-        int width = parent.getWidth()/components.length;
+        XmlTree curItem = new XmlTree();
+        curItem = parent;
+        JFrame frame = new JFrame();
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        //___________________________________
+        //заготовка для переходов по дереву
+        if(curItem.name.equals("root")) curItem = curItem.NextCont();
+        if(curItem.name.equals("frame")) curItem = curItem.NextCont();
+        if(curItem.name.equals("panel")) { frame.setContentPane(curItem.item); curItem = curItem.NextChild();}
+        if(curItem.name.equals("label")) { curItem.parent.item.add(curItem.item); curItem = curItem.NextChild();}
+        if(curItem.name.equals("text-field")) { curItem.parent.item.add(curItem.item); curItem = curItem.NextChild();}
+        if(curItem.name.equals("button")) { curItem.parent.item.add(curItem.item); curItem = curItem.NextChild();}
+        //_______________________________________
 
-        int height = parent.getHeight()/components.length;
-
-        for(int i=0; i<components.length; i++) {
-
-            Rectangle r = new Rectangle(col, row, width, height);
-
-            components[i].setBounds(r);
-
-            col += width;
-
-            row += height;
 
         }
 
