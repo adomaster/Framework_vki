@@ -1,55 +1,53 @@
 import XmlParser;
+
+import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import java.util.ArrayList.*;
 
 
+abstract class Bg_color {
+    public Color bgColor;
 
-class XmlLayoutTest extends JFrame
+    public Color Set_bgColor(String str) {
+        if (str.equals("black"))
+            bgColor = Color.black;
+        if (str.equals("white"))
+            bgColor = Color.white;
+        if (str.equals("red"))
+            bgColor = Color.red;
+        if (str.equals("green"))
+            bgColor = Color.green;
+        if (str.equals("blue"))
+            bgColor = Color.blue;
+        if (str.equals("yellow"))
+            bgColor = Color.yellow;
+        if (str.equals("gray"))
+            bgColor = Color.gray;
 
-{
-
-    public XmlLayoutTest()
-
-    {
-
-        getContentPane().setLayout(new XmlLayout());
-
-    }
-
-
-
-    public static void main(String[] args)
-
-    {
-
-        XmlLayoutTest flt = new XmlLayoutTest();
-
-        flt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        flt.setVisible(true);
-
+        return bgColor;
     }
 
 }
-
-
-
 
 public class XmlLayout implements LayoutManager
 
 {
 
+    public XmlParser xp;
+    public JFrame frame;
+    public XmlTree curItem;
+    Bg_color bg;
 
     public void addLayoutComponent(String name, Component comp)
 
-    {}
+    {
+    }
 
     public void removeLayoutComponent(Component comp)
 
-    {}
+    {
+    }
 
- 
 
     public Dimension minimumLayoutSize(Container parent)
 
@@ -59,7 +57,6 @@ public class XmlLayout implements LayoutManager
 
     }
 
- 
 
     public Dimension preferredLayoutSize(Container parent)
 
@@ -69,7 +66,6 @@ public class XmlLayout implements LayoutManager
 
     }
 
- 
 
     private Dimension computeLayoutSize(Container parent)
 
@@ -81,7 +77,7 @@ public class XmlLayout implements LayoutManager
 
         Component[] components = parent.getComponents();
 
-        for(int k=0; k<components.length; k++) {
+        for (int k = 0; k < components.length; k++) {
 
             prefWidth += components[k].getWidth();
 
@@ -93,33 +89,96 @@ public class XmlLayout implements LayoutManager
 
     }
 
- 
+
+    XmlLayout(String xmlFile) {
+        xp = new XmlParser();
+        xp.parseXml(xmlFile);
+
+    }
+
+    public void useAttrib(XmlTree obj) {
+
+        if (obj.attr != null) {
+            int width = 60;
+            int height = 20;
+            int len = obj.attr.getLength();
+            for (int i = 0; i < len; i++) {
+                if (obj.attr.getQName(i).equals("bgcolor")) {
+                    if (obj.name.equals("label")) obj.item.setOpaque(true);
+                    obj.item.setBackground(bg.Set_bgColor(obj.attr.getValue(i)));
+
+                }
+                if (obj.attr.getQName(i).equals("width")) {
+                    width = Integer.parseInt(obj.attr.getValue(i));
+                }
+                if (obj.attr.getQName(i).equals("height")) {
+                    height = Integer.parseInt(obj.attr.getValue(i));
+                }
+                if (obj.attr.getQName(i).equals("align")) {
+                    String x = obj.attr.getValue(i);
+                }
+                if (obj.attr.getQName(i).equals("valign")) {
+                    String y = obj.attr.getValue(i);
+                }
+                /*   if(obj.name.equals("button"))
+               {
+                   obj.item.addActionListener(new ActionListener() {
+                   public void actionPerformed(ActionEvent e) {
+
+                      setText("Pushed");
+                   }
+               });
+               } */
+                Dimension d = new Dimension(width, height);
+                obj.item.setPreferredSize(d);
 
 
+            }
+        }
+    }
 
-    public void layoutContainer(XmlTree parent)
+
+    public void overTree(XmlTree parent) {
+        for (int i = 0; i < parent.children.size(); i++) {
+            if (parent.children.get(i).name.equals("frame")) {
+                frame = new JFrame();
+                frame.setSize(500, 500);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+                overTree(parent.children.get(i));
+            }
+            if (parent.children.get(i).name.equals("panel")) {
+                frame.setContentPane(parent.children.get(i).item);
+                overTree(parent.children.get(i));
+            }
+            if (parent.children.get(i).name.equals("label")) {
+                parent.children.get(i).parent.item.add(parent.children.get(i).item);
+                useAttrib(parent.children.get(i));
+                overTree(parent.children.get(i));
+            }
+            if (parent.children.get(i).name.equals("text-field")) {
+                parent.children.get(i).parent.item.add(parent.children.get(i).item);
+                useAttrib(parent.children.get(i));
+                overTree(parent.children.get(i));
+            }
+            if (parent.children.get(i).name.equals("button")) {
+                parent.children.get(i).parent.item.add(parent.children.get(i).item);
+                useAttrib(parent.children.get(i));
+                overTree(parent.children.get(i));
+            }
+        }
+    }
+
+    public void layoutContainer(Container parent)
 
     {
 
-        XmlTree curItem = new XmlTree();
-        curItem = parent;
-        JFrame frame = new JFrame();
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        //___________________________________
-        //заготовка для переходов по дереву
-        if(curItem.name.equals("root")) curItem = curItem.NextCont();
-        if(curItem.name.equals("frame")) curItem = curItem.NextCont();
-        if(curItem.name.equals("panel")) { frame.setContentPane(curItem.item); curItem = curItem.NextChild();}
-        if(curItem.name.equals("label")) { curItem.parent.item.add(curItem.item); curItem = curItem.NextChild();}
-        if(curItem.name.equals("text-field")) { curItem.parent.item.add(curItem.item); curItem = curItem.NextChild();}
-        if(curItem.name.equals("button")) { curItem.parent.item.add(curItem.item); curItem = curItem.NextChild();}
-        //_______________________________________
+        curItem = new XmlTree();
+        curItem = xp.getTree();
+        overTree(curItem);
 
-
-        }
 
     }
 
 }
+

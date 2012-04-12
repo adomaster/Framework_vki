@@ -24,16 +24,17 @@ class XmlTree{
         return cur;
     }
 
-    public XmlTree NextCont(int id){
+ /*   public XmlTree NextCont(int id){
        return this.children.get(id);
     }
     public XmlTree NextChild(int id){
        return this.children.get(id);
     }
-
+     */
 }
 public class XmlParser extends DefaultHandler{
     public XmlTree curItem;
+    public XmlTree root;
     public void parseXml(String uri)
   {
     try
@@ -48,7 +49,13 @@ public class XmlParser extends DefaultHandler{
     }
   }
 
-
+  public XmlTree getTree(){
+      while(!curItem.name.equals("root"))
+      {
+          curItem = curItem.parent;
+      }
+      return  curItem;
+  }
   public void startDocument()
   {
       curItem = new XmlTree();
