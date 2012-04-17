@@ -36,6 +36,8 @@ public class XmlLayout implements LayoutManager
     public XmlParser xp;
     public JFrame frame;
     public XmlTree curItem;
+    public int pWidth;
+    public int pHeight;
     Bg_color bg;
 
     public void addLayoutComponent(String name, Component comp)
@@ -93,7 +95,6 @@ public class XmlLayout implements LayoutManager
     XmlLayout(String xmlFile) {
         xp = new XmlParser();
         xp.parseXml(xmlFile);
-
     }
 
     public void useAttrib(XmlTree obj) {
@@ -101,6 +102,15 @@ public class XmlLayout implements LayoutManager
         if (obj.attr != null) {
             int width = 60;
             int height = 20;
+            int b11 = 0;
+            int b12 = 0;
+            int b21 = 0;
+            int b22 = 0;
+            String fname = "serif";
+            int fstyle = Font.PLAIN;
+            int fsize = 14;
+
+
             int len = obj.attr.getLength();
             for (int i = 0; i < len; i++) {
                 if (obj.attr.getQName(i).equals("bgcolor")) {
@@ -116,24 +126,56 @@ public class XmlLayout implements LayoutManager
                 }
                 if (obj.attr.getQName(i).equals("align")) {
                     String x = obj.attr.getValue(i);
+                    if (x.equals("left")) {
+                        b11 = 0;
+                        b21 = width;
+
+                    }
+                    if (x.equals("center")) {
+                        b11 = pWidth / 3;
+                        b21 = (pWidth / 3) + width;
+
+                    }
+                    if (x.equals("right")) {
+                        b11 = (pWidth / 3) * 2;
+                        b21 = ((pWidth / 3) * 2) + width;
+
+                    }
                 }
                 if (obj.attr.getQName(i).equals("valign")) {
                     String y = obj.attr.getValue(i);
+                    if (y.equals("top")) {
+                        b12 = 0;
+                        b22 = height;
+
+                    }
+                    if (y.equals("center")) {
+                        b12 = pHeight / 3;
+                        b22 = (pHeight / 3) + height;
+
+                    }
+                    if (y.equals("bottom")) {
+                        b12 = (pHeight / 3) * 2;
+                        b22 = ((pHeight / 3) * 2) + height;
+
+                    }
                 }
-                /*   if(obj.name.equals("button"))
-               {
-                   obj.item.addActionListener(new ActionListener() {
-                   public void actionPerformed(ActionEvent e) {
 
-                      setText("Pushed");
-                   }
-               });
-               } */
-                Dimension d = new Dimension(width, height);
-                obj.item.setPreferredSize(d);
-
+                if (obj.attr.getQName(i).equals("font-size")) {
+                    fsize = Integer.parseInt(obj.attr.getValue(i));
+                }
+                if (obj.attr.getQName(i).equals("font-style")) {
+                    if (obj.attr.getValue(i).equals("plain")) fstyle = Font.PLAIN;
+                    if (obj.attr.getValue(i).equals("bold")) fstyle = Font.BOLD;
+                    if (obj.attr.getValue(i).equals("italic")) fstyle = Font.ITALIC;
+                }
 
             }
+            Dimension d = new Dimension(width, height);
+            obj.item.setPreferredSize(d);
+            Rectangle r = new Rectangle(b11, b12, b21, b22);
+            obj.item.setBounds(r);
+            obj.item.setFont(new Font(fname,fstyle,fsize));
         }
     }
 
@@ -149,6 +191,8 @@ public class XmlLayout implements LayoutManager
             }
             if (parent.children.get(i).name.equals("panel")) {
                 frame.setContentPane(parent.children.get(i).item);
+                pHeight = parent.children.get(i).item.getHeight();
+                pWidth = parent.children.get(i).item.getWidth();
                 overTree(parent.children.get(i));
             }
             if (parent.children.get(i).name.equals("label")) {
