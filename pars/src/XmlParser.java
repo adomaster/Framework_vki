@@ -1,5 +1,7 @@
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import com.sun.jndi.dns.DnsName;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -8,7 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.sql.Array;
+import java.util.*;
+import java.util.List;
 
 class XmlTree{
     public JComponent item;
@@ -16,12 +20,14 @@ class XmlTree{
     public String name;
     public ArrayList<XmlTree> children;
     public XmlTree parent;
+    public List<String> a = new ArrayList<String>();
 
-    public XmlTree addChild(XmlTree cur) {
+    public void addChild(XmlTree cur) {
 
         this.children.add(cur);
         cur.parent = this;
-        return cur;
+       // this = cur;
+
     }
 
  /*   public XmlTree NextCont(int id){
@@ -34,7 +40,9 @@ class XmlTree{
 }
 public class XmlParser extends DefaultHandler{
     public XmlTree curItem;
-    public XmlTree root;
+   // public XmlTree root;
+    public int i;
+
     public void parseXml(String uri)
   {
     try
@@ -59,7 +67,9 @@ public class XmlParser extends DefaultHandler{
   public void startDocument()
   {
       curItem = new XmlTree();
-      curItem.name = "root";
+      curItem.name = "frame";
+      curItem.children = new ArrayList<XmlTree>();
+      i = 0;
 
 
   }
@@ -68,9 +78,40 @@ public class XmlParser extends DefaultHandler{
   public void startElement(String namespaceURI, String localName,
                            String rawName, Attributes attrs)
   {
-      curItem = curItem.addChild(new XmlTree());
+     // curItem.addChild(new XmlTree());
+         if(curItem.children==null) curItem.children=new ArrayList<XmlTree>();
+
+      if(curItem.children.isEmpty()){
+
+          XmlTree saveItem = new XmlTree();
+
+          i=0;
+          curItem.children.add(i,new XmlTree());
+          saveItem = curItem.children.get(i);
+          saveItem.parent = curItem;
+           curItem = saveItem;
+     // curItem.children.get(i).parent = curItem;
+    //  curItem = curItem.children.get(i);
+      i++;
       curItem.name = rawName;
       curItem.attr = attrs;
+
+      }
+      else {
+          XmlTree saveItem = new XmlTree();
+      curItem.children.add(i,new XmlTree());
+      saveItem = curItem.children.get(i);
+          saveItem.parent = curItem;
+          curItem = saveItem;
+    //  curItem.children.get(i).parent = curItem;
+    // curItem = curItem.children.get(i);
+      i++;
+      curItem.name = rawName;
+      curItem.attr = attrs;   }
+
+      for ( int i = 0; i < attrs.getLength(); i++) {
+          curItem.a.add(attrs.getQName(i));
+      }
   }
   public void characters(char ch[], int start, int length)
   {

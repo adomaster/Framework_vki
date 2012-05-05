@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <panel>
     <label>Test label</label>
-    <text-field>Test text-field</text-field>
-    <button>Test button</button>
- </panel>
+    <text-field width="50" height="50">Test text-field</text-field>
+    <button width="50" height="100" font-style="bold" bgcolor="red">Test button</button>
+
+</panel>

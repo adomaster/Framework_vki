@@ -1,3 +1,5 @@
+//import XmlParser.*;
+
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -7,17 +9,14 @@ class XmlLayoutTest extends JFrame {
 
         getContentPane().setLayout(new XmlLayout("xmltest.xml"));
 
-        setBounds(100, 100, 500, 500);
     }
 
     public static void main(String[] args) {
         XmlLayoutTest flt = new XmlLayoutTest();
-        //   flt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //  flt.setVisible(true);
+
     }
 }
-
-abstract class Bg_color {
+ class Bg_color {
     public Color bgColor;
 
     public Color Set_bgColor(String str) {
@@ -88,17 +87,7 @@ public class XmlLayout implements LayoutManager
         int prefWidth = 0;
 
         int prefHeight = 0;
-        /*
-       Component[] components = parent.getComponents();
 
-       for (int k = 0; k < components.length; k++) {
-
-           prefWidth += components[k].getWidth();
-
-           prefHeight += components[k].getHeight();
-
-       }
-        */
         return new Dimension(prefWidth, prefHeight);
 
     }
@@ -107,11 +96,14 @@ public class XmlLayout implements LayoutManager
     XmlLayout(String xmlFile) {
         xp = new XmlParser();
         xp.parseXml(xmlFile);
+        bg = new Bg_color();
+
         frame = new JFrame();
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         layoutContainer(frame);
+      //  frame.getContentPane().add(xp.curItem.item);
 
     }
 
@@ -134,6 +126,7 @@ public class XmlLayout implements LayoutManager
                 if (obj.attr.getQName(i).equals("bgcolor")) {
                     if (obj.name.equals("label")) obj.item.setOpaque(true);
                     obj.item.setBackground(bg.Set_bgColor(obj.attr.getValue(i)));
+
 
 
                 }
@@ -194,47 +187,51 @@ public class XmlLayout implements LayoutManager
             obj.item.setPreferredSize(d);
             Rectangle r = new Rectangle(b11, b12, b21, b22);
             obj.item.setBounds(r);
+
             obj.item.setFont(new Font(fname, fstyle, fsize));
             frame.getContentPane();
         }
     }
 
 
-    public void overTree(XmlTree prnt) {
-        if(!prnt.children.isEmpty()){
-        for (int i = 0; i <= prnt.children.size(); i++) {
+    public void overTree(XmlTree prnt, JFrame frm) {
+        if((prnt.children!=null)&&(!prnt.children.isEmpty())){
+       for (int i = 0; i < prnt.children.size(); i++) {
+           // for (int i = 0; i <= 1; i++) {
             if (prnt.children.get(i).name.equals("frame")) {
-                frame = new JFrame();
+                frame = frm;
+                //frame = new JFrame();
                 frame.setSize(500, 500);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
-                overTree(prnt.children.get(i));
+                overTree(prnt.children.get(i),frame);
             }
             if (prnt.children.get(i).name.equals("panel")) {
                 frame.setContentPane(prnt.children.get(i).item);
                 pHeight = prnt.children.get(i).item.getHeight();
                 pWidth = prnt.children.get(i).item.getWidth();
-                overTree(prnt.children.get(i));
+                overTree(prnt.children.get(i),frame);
             }
             if (prnt.children.get(i).name.equals("label")) {
                 prnt.children.get(i).parent.item.add(prnt.children.get(i).item);
                 useAttrib(prnt.children.get(i));
-                overTree(prnt.children.get(i));
+                overTree(prnt.children.get(i),frame);
             }
             if (prnt.children.get(i).name.equals("text-field")) {
                 prnt.children.get(i).parent.item.add(prnt.children.get(i).item);
                 useAttrib(prnt.children.get(i));
-                overTree(prnt.children.get(i));
+                overTree(prnt.children.get(i),frame);
             }
             if (prnt.children.get(i).name.equals("button")) {
                 prnt.children.get(i).parent.item.add(prnt.children.get(i).item);
                 useAttrib(prnt.children.get(i));
-                overTree(prnt.children.get(i));
+                overTree(prnt.children.get(i),frame);
             }
         }
         }
-
     }
+
+
 
     public void layoutContainer(Container parent)
 
@@ -242,7 +239,7 @@ public class XmlLayout implements LayoutManager
 
         curItem1 = new XmlTree();
         curItem1 = xp.getTree();
-        overTree(curItem1);
+        overTree(curItem1,frame);
 
 
 
