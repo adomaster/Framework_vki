@@ -1,32 +1,14 @@
+package XmlLayout;
+
 import java.awt.event.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
 
-class Bg_color {
-    public Color bgColor;
-
-    public Color Set_bgColor(String str) {
-        if (str.equals("black"))
-            bgColor = Color.black;
-        if (str.equals("white"))
-            bgColor = Color.white;
-        if (str.equals("red"))
-            bgColor = Color.red;
-        if (str.equals("green"))
-            bgColor = Color.green;
-        if (str.equals("blue"))
-            bgColor = Color.blue;
-        if (str.equals("yellow"))
-            bgColor = Color.yellow;
-        if (str.equals("gray"))
-            bgColor = Color.gray;
-
-        return bgColor;
-    }
-
-}
+import XmlParser.ItemMap;
+import XmlParser.XmlParser;
+import XmlParser.XmlTree;
 
 public class XmlLayout implements LayoutManager
 
@@ -36,11 +18,12 @@ public class XmlLayout implements LayoutManager
     public JFrame frame;
     public XmlTree curItem1;
     public XmlTree curItem2;
+    public XmlLayout save;
     public int len;
     public int j;
     public int pWidth;
     public int pHeight;
-    public ItemMap im;
+    public static ItemMap im;
     public Map actions;
     Bg_color bg;
     public boolean bpanel_bg;
@@ -100,11 +83,11 @@ public class XmlLayout implements LayoutManager
         }
     }
 
-
-    XmlLayout(String xmlFile) {
+    public XmlLayout(String xmlFile) {
         xp = new XmlParser();
         xp.parseXml(xmlFile);
         bg = new Bg_color();
+
 
         bpanel_bg = false;
         bpanel_fsize = false;
@@ -134,6 +117,9 @@ public class XmlLayout implements LayoutManager
         layoutContainer(frame);
     }
 
+    public XmlLayout getXmlLayout() {
+        return save;
+    }
 
     public void useAttrib(XmlTree obj) {
 
@@ -148,13 +134,30 @@ public class XmlLayout implements LayoutManager
             String fname = "serif";
             int fstyle = Font.PLAIN;
             int fsize = 14;
-            if (!obj.bact) {
-                if (obj.at.op.containsKey("action")) {
-                    obj.btn.removeActionListener((ActionListener) actions.get(obj.at.op.get("action").toString()));
-                    obj.btn.addActionListener((ActionListener) actions.get(obj.at.op.get("action").toString()));
 
+            if (obj.at.op.containsKey("action")) {
+
+
+                // ActionListener listener = (ActionListener) Class.forName(obj.at.op.get("action").toString()));
+                //  obj.btn.addActionListener(listener);
+
+                try {
+                    ActionListener c;
+                    c = (ActionListener) Class.forName(obj.at.op.get("action").toString()).newInstance();
+                    ActionListener[] listeners = obj.btn.getActionListeners();
+                    for (int i = 0; i < listeners.length; i++) {
+                        obj.btn.removeActionListener(listeners[i]);
+                    }
+                    obj.btn.addActionListener(c);
+                } catch (ClassNotFoundException ex) {
+                    System.out.println(ex);
+                } catch (InstantiationException ex) {
+                    System.out.println(ex);
+                } catch (IllegalAccessException ex) {
+                    System.out.println(ex);
                 }
             }
+
 
             if (obj.at.op.containsKey("bgcolor")) {
                 if (obj.name.equals("panel")) {

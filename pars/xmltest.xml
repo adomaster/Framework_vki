@@ -6,6 +6,6 @@
     <textfield name="textfield1" bgcolor="white" width="120" height="30" align="0.45" valign="0.2">Enter login</textfield>
     <textfield name="textfield2" bgcolor="white" width="120" height="30" align="0.45" valign="0.3">Enter password</textfield>
     <textfield name="textfield3" bgcolor="white" width="120" height="30" align="0.45" valign="0.4">Enter password</textfield>
-    <button  name="button1" action="newAction1" width="150" height="50" font-size="16" align="0.3" valign="0.5">Register</button>
-    <button  name="button2" action="newAction2" width="150" height="50" font-size="16" align="0.3" valign="0.65">Another action</button>
+    <button  name="button1" action="ru.example.myAction1" width="150" height="50" font-size="16" align="0.3" valign="0.5">Register</button>
+    <button  name="button2" action="ru.example.myAction2" width="150" height="50" font-size="16" align="0.3" valign="0.65">Test button</button>
 </panel>

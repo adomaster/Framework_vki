@@ -1,50 +1,20 @@
+package XmlParser;
+
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import com.sun.jndi.dns.DnsName;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Array;
 import java.util.*;
-import java.util.List;
-
-class Attrib {
-    public String idname;
-    public int size;
-    public Map op;
-
-}
-
-class ItemMap{
-    public Map items;
-
-}
-
-class XmlTree {
-    public JComponent item;
-    public JButton btn;
-    public Attributes attr;
-    public int atlen;
-    public String name;
-    public ArrayList<XmlTree> children;
-    public XmlTree parent;
-    public Attrib at;
-    public boolean bact;
-
-
-}
 
 public class XmlParser extends DefaultHandler {
     public XmlTree curItem;
     public int i;
-    ItemMap im = new ItemMap();
+    public ItemMap im = new ItemMap();
 
     public void parseXml(String uri) {
         try {
