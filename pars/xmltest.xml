@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<panel>
-    <label name="label1" width="100" height="30" bgcolor="green" align="0" valign="0" font-style="bold">Test label</label>
-    <textfield name="textfield1" width="100" height="50" align="0.5" valign="0.5">Test text-field</textfield>
-    <button  name="button1" action="new" width="150" height="100" font-size="16" align="1" valign="1">Test button</button>
-</panel>
