@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<panel bgcolor="yellow">
+    <label name="label1" width="70" height="30" bgcolor="green" align="0.2" valign="0.2" font-style="italic">Привет:</label>
+    <label name="label2" width="70" height="30" align="0.2" valign="0.3" font-style="italic">Password:</label>
+    <label name="label3" width="110" height="30" align="0.2" valign="0.4" font-style="italic">Confirm password:</label>
+    <textfield name="textfield1" bgcolor="white" width="120" height="30" align="0.45" valign="0.2">Enter login</textfield>
+    <textfield name="textfield2" bgcolor="white" width="120" height="30" align="0.45" valign="0.3">Enter password</textfield>
+    <textfield name="textfield3" bgcolor="white" width="120" height="30" align="0.45" valign="0.4">Enter password</textfield>
+    <button  name="button1" action="newAction1" width="150" height="50" font-size="16" align="0.3" valign="0.5">Register</button>
+    <button  name="button2" action="newAction2" width="150" height="50" font-size="16" align="0.3" valign="0.65">Another action</button>
+</panel>
